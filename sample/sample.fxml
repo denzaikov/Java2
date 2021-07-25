@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="center" xmlns="http://javafx.com/javafx/8.0.301" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+
+    <TextArea fx:id="chatField" editable="false" VBox.vgrow="ALWAYS">
+      <font>
+         <Font size="15.0" />
+      </font></TextArea>
+    <HBox>
+        <TextField fx:id="textChat" onAction="#PressText" HBox.hgrow="ALWAYS">
+         <font>
+            <Font name="Tahoma" size="15.0" />
+         </font></TextField>
+        <Button defaultButton="true" onAction="#Send" prefHeight="25" prefWidth="200"> Отправить
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font></Button>
+
+    </HBox>
+
+</VBox>
