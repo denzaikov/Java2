@@ -31,34 +31,39 @@ public class Main {
         float[] leftHalf  = new float[HALF_SIZE];
         float[] rightHalf = new float[HALF_SIZE];
 
-
         for (int i = 0; i < arr.length; i++) {
             arr[i] = 1.0f;
         }
         // Копируем в них значения из большого массива
-        long startTime = System.currentTimeMillis();
+
         System.arraycopy(arr, 0, leftHalf, 0, HALF_SIZE);
         System.arraycopy(arr, HALF_SIZE , rightHalf, 0, HALF_SIZE);
 
+        long startTime = System.currentTimeMillis();
 
         // Запускает два потока и параллельно просчитываем каждый малый массив
 
-        Thread thread1 = new Thread(() -> {
+        Thread t1 = new Thread(() -> {
             for (int i = 0; i < HALF_SIZE; i++) {
                 leftHalf[i] = (float)(leftHalf[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
             }
         });
+        t1.start();
 
-        Thread thread2 = new Thread(() -> {
+        Thread t2 = new Thread(() -> {
             for (int i = 0; i < HALF_SIZE; i++) {
                 rightHalf[i] = (float)(rightHalf[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
             }
         });
+        t2.start();
 
-        thread1.start();
-        thread2.start();
-        System.out.println(thread1.getName());
-        System.out.println(thread2.getName());
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
 
         // Склеиваем малые массивы обратно в один большой
 
